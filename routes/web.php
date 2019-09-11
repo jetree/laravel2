@@ -11,8 +11,8 @@
 |
 */
 
-Route::get('/',function(){
-    return 'hello world';
+Route::get('/{any?}',function(){
+    return view('index');
 });
 // Route::get('/', function () {
 //     return view('welcome');
