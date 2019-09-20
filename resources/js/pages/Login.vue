@@ -59,12 +59,14 @@ export default {
     }
   },
   methods:{
-    login(){
+    async register() {
+      await this.$store.dispatch('auth/register',this.registerForm)
+      
+      this.$router.push('/')
+    },
+    async login(){
       console.log(this.loginForm)
     },
-    register () {
-      console.log(this.registerForm)
-    }
   }
 }
 </script>
