@@ -1990,9 +1990,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                console.log(this.loginForm);
+                _context2.next = 2;
+                return this.$store.dispatch('auth/login', this.loginForm);
 
-              case 1:
+              case 2:
+                this.$router.push('/');
+
+              case 3:
               case "end":
                 return _context2.stop();
             }
@@ -37340,6 +37344,36 @@ var actions = {
     }
 
     return register;
+  }(),
+  login: function () {
+    var _login = _asyncToGenerator(
+    /*#__PURE__*/
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(context, data) {
+      var response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              _context2.next = 2;
+              return axios.post('/api/login', data);
+
+            case 2:
+              response = _context2.sent;
+              context.commit('setUser', response.data);
+
+            case 4:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2);
+    }));
+
+    function login(_x3, _x4) {
+      return _login.apply(this, arguments);
+    }
+
+    return login;
   }()
 };
 /* harmony default export */ __webpack_exports__["default"] = ({

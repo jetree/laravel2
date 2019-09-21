@@ -65,7 +65,9 @@ export default {
       this.$router.push('/')
     },
     async login(){
-      console.log(this.loginForm)
+      await this.$store.dispatch('auth/login',this.loginForm)
+
+      this.$router.push('/')
     },
   }
 }
