@@ -4,6 +4,8 @@ import VueRouter from 'vue-router'
 import PhotoList from './pages/PhotoList.vue'
 import Login from './pages/login.vue'
 
+import store from './atore'
+
 //VueRouterを呼び出す
 Vue.use(VueRouter)
 
@@ -15,7 +17,14 @@ const routes = [
   },
   {
     path: '/login',
-    component: Login
+    component: Login,
+    beforeEnter(to,from,next){
+      if(store.gettres['auth/check']){
+        next('/')
+      }else{
+        next()
+      }
+    }
   }
 ]
 
