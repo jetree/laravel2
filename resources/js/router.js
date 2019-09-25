@@ -4,7 +4,7 @@ import VueRouter from 'vue-router'
 import PhotoList from './pages/PhotoList.vue'
 import Login from './pages/login.vue'
 
-import store from './atore'
+import store from './store'
 
 //VueRouterを呼び出す
 Vue.use(VueRouter)
