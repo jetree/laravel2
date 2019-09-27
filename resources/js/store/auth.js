@@ -1,5 +1,8 @@
+import { OK } from '../util'
+
 const state = {
-  user:null
+  user: null,
+  apiState: null
 }
 
 const getters = {
@@ -20,8 +23,17 @@ const actions = {
     context.commit('setUser',response.data)
   },
   async login(context,data){
+    context.comit('setApiState',null)
     const response = await axios.post('/api/login',data)
-    context.commit('setUser',response.data)
+    
+    if(response.status === OK){
+      context.comit('setApiState',true)
+      context.commit('setUser',response.data)
+      return false
+    }
+    
+    context.commit('setApiState',false)
+    context.commit('error/setCode',response.state,{ root:true })
   },
   async logout(context){
     const  response = await axios.post('/api/logout')
