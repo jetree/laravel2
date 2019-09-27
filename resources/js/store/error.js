@@ -4,12 +4,12 @@ const state = {
 
 const mutations = {
   setCode(state,code){
-    state,code = code
+    state.code = code
   }
 }
 
 export default {
-  namespaced = true,
+  namespaced: true,
   state,
   mutations
 }
