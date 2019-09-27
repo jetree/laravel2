@@ -1,8 +1,9 @@
-import { OK } from '../util'
+import { OK, UNPROSESSABLE_ENTITY } from '../util'
 
 const state = {
   user: null,
-  apiState: null
+  apiState: null,
+  loginErrorMessages: null
 }
 
 const getters = {
@@ -14,6 +15,12 @@ const getters = {
 const mutations = {
   setUser(state,user){
     state.user = user
+  },
+  setApiState(state,status){
+    state.status = status
+  },
+  setLoginErrorMessages(state,messages){
+    state.loginErrorMessages = messages
   }
 }
 
@@ -27,13 +34,17 @@ const actions = {
     const response = await axios.post('/api/login',data)
     
     if(response.status === OK){
-      context.comit('setApiState',true)
+      context.commit('setApiState',true)
       context.commit('setUser',response.data)
       return false
     }
     
     context.commit('setApiState',false)
-    context.commit('error/setCode',response.state,{ root:true })
+    if(response.status === UNPROSESSABLE_ENTITY){
+      context.commit('setLoginErrorMessages',response.errors)
+    }else{
+      context.commit('error/setCode',response.state,{ root:true })
+    }
   },
   async logout(context){
     const  response = await axios.post('/api/logout')
