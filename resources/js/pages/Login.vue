@@ -68,6 +68,7 @@ export default {
   },
 
   computed:{
+    
     apiStatus(){
       return this.$store.state.auth.apiStatus
     },
