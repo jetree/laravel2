@@ -16,7 +16,7 @@ class LoginApiTest extends TestCase
         parent::setUp();
 
         $this->user = factory(User::class)->create();
-
+        // dd($this->user->password);
     }
 
 
