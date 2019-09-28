@@ -2160,7 +2160,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }
 
       return login;
-    }()
+    }(),
+    clearError: function clearError() {
+      this.$store.commit('auth/setLoginErrorMessages', null);
+    }
+  },
+  created: function created() {
+    this.clearError();
   }
 });
 

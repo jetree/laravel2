@@ -89,6 +89,13 @@ export default {
         this.$router.push('/')
       }
     },
+    clearError(){
+      this.$store.commit('auth/setLoginErrorMessages',null)
+    }
+  },
+
+  created(){
+    this.clearError()
   }
 }
 </script>
