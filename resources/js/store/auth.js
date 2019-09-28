@@ -1,4 +1,4 @@
-import { OK, UNPROSESSABLE_ENTITY } from '../util'
+import { OK, UNPROCESSABLE_ENTITY } from '../util'
 
 const state = {
   user: null,
@@ -30,8 +30,9 @@ const actions = {
     context.commit('setUser',response.data)
   },
   async login(context,data){
-    context.comit('setApiState',null)
-    const response = await axios.post('/api/login',data)
+    context.commit('setApiState',null)
+    const response = await axios.post('/api/login',data).catch(err => err.response || err)
+    console.log(response)
     
     if(response.status === OK){
       context.commit('setApiState',true)
@@ -40,8 +41,8 @@ const actions = {
     }
     
     context.commit('setApiState',false)
-    if(response.status === UNPROSESSABLE_ENTITY){
-      context.commit('setLoginErrorMessages',response.errors)
+    if(response.status === UNPROCESSABLE_ENTITY){
+      context.commit('setLoginErrorMessages',response.data.errors)
     }else{
       context.commit('error/setCode',response.state,{ root:true })
     }

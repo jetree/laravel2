@@ -14,6 +14,14 @@
     </ul>
       <div class="panel" v-show="tab === 1">
         <form class="form" @submit.prevent="login">
+          <div v-if="loginErrors" class="errors">
+              <ul v-if="loginErrors.email">
+                <li v-for="msg in loginErrors.email" :key="msg">{{ msg }}</li>
+              </ul>
+              <ul v-if="loginErrors.password">
+                <li v-for="msg in loginErrors.password" :key="msg">{{ msg }}</li>
+              </ul>
+            </div>
           <label for="login-email">Email</label>
           <input type="text" class="form__item" id="login-email" v-model="loginForm.email">
           <label for="login-password">Password</label>
@@ -75,8 +83,8 @@ export default {
       this.$router.push('/')
     },
     async login(){
+      console.log('押した')
       await this.$store.dispatch('auth/login',this.loginForm)
-
       if(this.apiStatus){
         this.$router.push('/')
       }

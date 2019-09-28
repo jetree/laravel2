@@ -2069,6 +2069,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2130,15 +2138,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                _context2.next = 2;
+                console.log('押した');
+                _context2.next = 3;
                 return this.$store.dispatch('auth/login', this.loginForm);
 
-              case 2:
+              case 3:
                 if (this.apiStatus) {
                   this.$router.push('/');
                 }
 
-              case 3:
+              case 4:
               case "end":
                 return _context2.stop();
             }
@@ -20742,6 +20751,30 @@ var render = function() {
             }
           },
           [
+            _vm.loginErrors
+              ? _c("div", { staticClass: "errors" }, [
+                  _vm.loginErrors.email
+                    ? _c(
+                        "ul",
+                        _vm._l(_vm.loginErrors.email, function(msg) {
+                          return _c("li", { key: msg }, [_vm._v(_vm._s(msg))])
+                        }),
+                        0
+                      )
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.loginErrors.password
+                    ? _c(
+                        "ul",
+                        _vm._l(_vm.loginErrors.password, function(msg) {
+                          return _c("li", { key: msg }, [_vm._v(_vm._s(msg))])
+                        }),
+                        0
+                      )
+                    : _vm._e()
+                ])
+              : _vm._e(),
+            _vm._v(" "),
             _c("label", { attrs: { for: "login-email" } }, [_vm._v("Email")]),
             _vm._v(" "),
             _c("input", {
@@ -37549,7 +37582,7 @@ var routes = [{
   path: '/login',
   component: _pages_login_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
   beforeEnter: function beforeEnter(to, from, next) {
-    if (_store__WEBPACK_IMPORTED_MODULE_5__["default"].gettres['auth/check']) {
+    if (_store__WEBPACK_IMPORTED_MODULE_5__["default"].getters['auth/check']) {
       next('/');
     } else {
       next();
@@ -37653,15 +37686,18 @@ var actions = {
         while (1) {
           switch (_context2.prev = _context2.next) {
             case 0:
-              context.comit('setApiState', null);
+              context.commit('setApiState', null);
               _context2.next = 3;
-              return axios.post('/api/login', data);
+              return axios.post('/api/login', data)["catch"](function (err) {
+                return err.response || err;
+              });
 
             case 3:
               response = _context2.sent;
+              console.log(response);
 
               if (!(response.status === _util__WEBPACK_IMPORTED_MODULE_1__["OK"])) {
-                _context2.next = 8;
+                _context2.next = 9;
                 break;
               }
 
@@ -37669,18 +37705,18 @@ var actions = {
               context.commit('setUser', response.data);
               return _context2.abrupt("return", false);
 
-            case 8:
+            case 9:
               context.commit('setApiState', false);
 
-              if (response.status === _util__WEBPACK_IMPORTED_MODULE_1__["UNPROSESSABLE_ENTITY"]) {
-                context.commit('setLoginErrorMessages', response.errors);
+              if (response.status === _util__WEBPACK_IMPORTED_MODULE_1__["UNPROCESSABLE_ENTITY"]) {
+                context.commit('setLoginErrorMessages', response.data.errors);
               } else {
                 context.commit('error/setCode', response.state, {
                   root: true
                 });
               }
 
-            case 10:
+            case 11:
             case "end":
               return _context2.stop();
           }
@@ -37824,7 +37860,7 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
 /*!******************************!*\
   !*** ./resources/js/util.js ***!
   \******************************/
-/*! exports provided: getCookieValue, OK, CREATED, INTERNAL_SERVER_ERROR, UNPROSESSABLE_ENTITY */
+/*! exports provided: getCookieValue, OK, CREATED, INTERNAL_SERVER_ERROR, UNPROCESSABLE_ENTITY */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -37833,7 +37869,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "OK", function() { return OK; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CREATED", function() { return CREATED; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "INTERNAL_SERVER_ERROR", function() { return INTERNAL_SERVER_ERROR; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UNPROSESSABLE_ENTITY", function() { return UNPROSESSABLE_ENTITY; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UNPROCESSABLE_ENTITY", function() { return UNPROCESSABLE_ENTITY; });
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
@@ -37868,7 +37904,7 @@ function getCookieValue(seachKey) {
 var OK = 200;
 var CREATED = 201;
 var INTERNAL_SERVER_ERROR = 500;
-var UNPROSESSABLE_ENTITY = 422;
+var UNPROCESSABLE_ENTITY = 422;
 
 /***/ }),
 
