@@ -24,7 +24,7 @@ const mutations = {
     state.loginErrorMessages = messages
   },
   setRegisterErrorMessages(state,message){
-    state.registerMessages = message
+    state.registerErrorMessages = message
   }
 }
 
@@ -32,7 +32,7 @@ const actions = {
   async register(context,data){
     context.commit('setApiState',null)
     const response = await axios.post('/api/register',data)
-
+  
     if(response.status === CREATE){
       context.commit('setApiState',true)
       context.commit('setUser',response.data)
@@ -50,7 +50,8 @@ const actions = {
   async login(context,data){
     context.commit('setApiState',null)
     const response = await axios.post('/api/login',data)
-    
+ 
+
     if(response.status === OK){
       context.commit('setApiState',true)
       context.commit('setUser',response.data)
@@ -76,9 +77,8 @@ const actions = {
     }
     context.commit('setApiState',false)
     context.commit('error/setCode',response.status,{ root:true })
-
-
   },
+
   async currentUser(context){
     context.commit('setApiState', true)
     const response = await axios.get('/api/user')
